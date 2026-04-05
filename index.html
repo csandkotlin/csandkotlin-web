@@ -4,26 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>csandkotlin · tổ chức phát triển mã nguồn mở</title>
-    <meta name="description" content="Trang web giới thiệu tổ chức csandkotlin trên GitHub — nơi lưu trữ dự án NtAI và các sáng kiến mã nguồn mở bằng C#.">
+    <meta name="description" content="Trang web giới thiệu tổ chức csandkotlin trên GitHub — nơi lưu trữ dự án NtAI và các sáng kiến mã nguồn mở bằng C# & Kotlin.">
     <meta name="theme-color" content="#0a0c10">
-    <!-- Google Fonts & simple reset -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        /* Light mode (default) */
+        :root {
+            --bg-body: #f9fafc;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #5b6e8c;
+            --border-light: #eef2f8;
+            --border-hover: #cddcf0;
+            --badge-bg: #eef2ff;
+            --badge-text: #1e40af;
+            --link-color: #2563eb;
+            --github-bg: #0d1117;
+            --github-text: white;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.03);
+            --shadow-md: 0 5px 12px rgba(0, 0, 0, 0.02);
+            --shadow-hover: 0 20px 30px -12px rgba(0, 0, 0, 0.08);
+            --gradient-start: #1e2b3c;
+            --gradient-end: #1e3a5f;
+        }
+
+        /* Dark mode */
+        body.dark {
+            --bg-body: #0a0c10;
+            --bg-card: #161b22;
+            --text-primary: #e6edf3;
+            --text-secondary: #b1bac4;
+            --text-muted: #8b949e;
+            --border-light: #21262d;
+            --border-hover: #3d444d;
+            --badge-bg: #1f3a5f;
+            --badge-text: #b3d0ff;
+            --link-color: #58a6ff;
+            --github-bg: #238636;
+            --github-text: #ffffff;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+            --shadow-md: 0 5px 12px rgba(0, 0, 0, 0.15);
+            --shadow-hover: 0 20px 30px -12px rgba(0, 0, 0, 0.3);
+            --gradient-start: #2d4a6e;
+            --gradient-end: #1f3a5f;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
-            background: #f9fafc;
-            color: #1e293b;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-primary);
             line-height: 1.5;
             scroll-behavior: smooth;
         }
 
-        /* background subtle pattern */
+        /* Fade animation for page content */
+        .fade-in {
+            animation: fadeIn 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Background subtle pattern */
         body::before {
             content: "";
             position: fixed;
@@ -37,25 +95,61 @@
             z-index: -2;
         }
 
+        body.dark::before {
+            background-image: radial-gradient(circle at 15% 30%, rgba(100, 108, 255, 0.08) 0%, transparent 40%),
+                              radial-gradient(circle at 85% 70%, rgba(0, 200, 200, 0.05) 0%, transparent 45%);
+        }
+
         .container {
             max-width: 1280px;
             margin: 0 auto;
             padding: 2rem 1.5rem 4rem;
         }
 
-        /* header / hero */
+        /* Header controls: dark mode toggle + language switcher */
+        .header-controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .ctrl-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(4px);
+        }
+
+        .ctrl-btn:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-1px);
+            color: var(--text-primary);
+        }
+
+        /* Hero section */
         .hero {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
             margin-bottom: 3.5rem;
-            border-bottom: 1px solid #e9edf2;
+            border-bottom: 1px solid var(--border-light);
             padding-bottom: 2.5rem;
         }
 
         .org-badge {
-            background: #0d1117;
+            background: var(--github-bg);
             color: white;
             font-weight: 600;
             font-size: 0.85rem;
@@ -64,22 +158,14 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            letter-spacing: -0.2px;
             margin-bottom: 1.5rem;
-            backdrop-filter: blur(2px);
-        }
-
-        .org-badge svg {
-            width: 16px;
-            height: 16px;
-            fill: white;
         }
 
         h1 {
             font-size: 3.3rem;
             font-weight: 800;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #1e2b3c, #2c3e66, #1e3a5f);
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -88,7 +174,7 @@
 
         .tagline {
             font-size: 1.25rem;
-            color: #475569;
+            color: var(--text-secondary);
             max-width: 650px;
             margin: 0 auto 1rem;
         }
@@ -97,8 +183,8 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: #0d1117;
-            color: white;
+            background: var(--github-bg);
+            color: var(--github-text);
             padding: 0.7rem 1.4rem;
             border-radius: 40px;
             font-weight: 500;
@@ -106,16 +192,13 @@
             transition: all 0.2s ease;
             margin-top: 0.5rem;
             font-size: 0.95rem;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
 
         .github-link:hover {
-            background: #1f2a3e;
+            opacity: 0.9;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
 
-        /* stats / meta row */
         .meta-stats {
             display: flex;
             flex-wrap: wrap;
@@ -125,22 +208,20 @@
         }
 
         .stat-item {
-            background: white;
+            background: var(--bg-card);
             padding: 0.5rem 1.4rem;
             border-radius: 60px;
             font-size: 0.9rem;
             font-weight: 500;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-            border: 1px solid #eef2f6;
-            color: #1f2a44;
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
         }
 
         .stat-item strong {
             font-weight: 800;
-            color: #0f2b3d;
+            color: var(--text-primary);
         }
 
-        /* grid layout for repositories */
         .section-title {
             font-size: 1.8rem;
             font-weight: 700;
@@ -152,12 +233,12 @@
         }
 
         .section-title span {
-            background: #eef2ff;
+            background: var(--badge-bg);
             padding: 2px 10px;
             border-radius: 30px;
             font-size: 0.9rem;
             font-weight: 600;
-            color: #1e40af;
+            color: var(--badge-text);
         }
 
         .repo-grid {
@@ -168,18 +249,18 @@
         }
 
         .repo-card {
-            background: #ffffff;
+            background: var(--bg-card);
             border-radius: 24px;
             padding: 1.5rem;
-            transition: all 0.25s;
-            border: 1px solid #eef2f8;
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.02);
+            transition: all 0.25s ease;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-md);
         }
 
         .repo-card:hover {
             transform: translateY(-4px);
-            border-color: #cddcf0;
-            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.08);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-hover);
         }
 
         .repo-name {
@@ -192,16 +273,16 @@
         }
 
         .repo-name code {
-            background: #f1f5f9;
+            background: var(--badge-bg);
             padding: 4px 10px;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            color: #0c4e6e;
+            color: var(--badge-text);
         }
 
         .repo-desc {
-            color: #334155;
+            color: var(--text-secondary);
             margin: 0.75rem 0 1rem;
             font-size: 0.95rem;
             line-height: 1.45;
@@ -211,12 +292,12 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: #eef2ff;
+            background: var(--badge-bg);
             padding: 0.25rem 0.8rem;
             border-radius: 30px;
             font-size: 0.8rem;
             font-weight: 500;
-            color: #1f3a6b;
+            color: var(--badge-text);
             width: fit-content;
         }
 
@@ -231,13 +312,13 @@
 
         .repo-link {
             background: transparent;
-            border: 1px solid #cddfe7;
+            border: 1px solid var(--border-light);
             padding: 0.4rem 1rem;
             border-radius: 40px;
             font-size: 0.8rem;
             font-weight: 500;
             text-decoration: none;
-            color: #1f3a5f;
+            color: var(--text-secondary);
             transition: 0.2s;
             display: inline-flex;
             align-items: center;
@@ -245,23 +326,38 @@
         }
 
         .repo-link:hover {
-            background: #0d1117;
-            color: white;
-            border-color: #0d1117;
+            background: var(--github-bg);
+            color: var(--github-text);
+            border-color: var(--github-bg);
         }
 
         .info-note {
-            background: #f8fafc;
+            background: var(--bg-card);
             border-radius: 28px;
             padding: 1.6rem 2rem;
             margin-top: 3rem;
             text-align: center;
-            border: 1px solid #e2edf7;
+            border: 1px solid var(--border-light);
         }
 
         .info-note p {
-            color: #2c3e66;
+            color: var(--text-secondary);
             font-weight: 500;
+        }
+
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .tech-stack span {
+            background: var(--badge-bg);
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            color: var(--badge-text);
         }
 
         .members-placeholder {
@@ -276,40 +372,63 @@
             margin-top: 4rem;
             text-align: center;
             font-size: 0.85rem;
-            color: #5b6e8c;
-            border-top: 1px solid #e2e8f0;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-light);
             padding-top: 2rem;
         }
 
+        .roadmap-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .roadmap-card {
+            flex: 1;
+            background: var(--bg-card);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            border: 1px solid var(--border-light);
+        }
+
+        .roadmap-card h3 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .roadmap-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
         @media (max-width: 680px) {
-            .container {
-                padding: 1.2rem 1rem 2.5rem;
-            }
-            h1 {
-                font-size: 2.3rem;
-            }
-            .repo-grid {
-                grid-template-columns: 1fr;
-            }
-            .section-title {
-                font-size: 1.5rem;
-            }
+            .container { padding: 1.2rem 1rem 2.5rem; }
+            h1 { font-size: 2.3rem; }
+            .repo-grid { grid-template-columns: 1fr; }
+            .section-title { font-size: 1.5rem; }
+            .roadmap-grid { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container fade-in" id="app">
+    <div class="header-controls">
+        <button class="ctrl-btn" id="langToggleBtn">🌐 Tiếng Việt / English</button>
+        <button class="ctrl-btn" id="darkModeToggleBtn">🌙 Dark Mode</button>
+    </div>
+
     <div class="hero">
         <div class="org-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.58 0-.287-.01-1.05-.015-2.06-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.082-.73.082-.73 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.698.83.578C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/>
             </svg>
             GitHub Organization
         </div>
-        <h1>csandkotlin</h1>
-        <div class="tagline">
-            Xây dựng công cụ, thư viện thông minh và khám phá tiềm năng của C# & Kotlin<br>
-            Mã nguồn mở · Sáng tạo · Cộng đồng
+        <h1 id="orgName">csandkotlin</h1>
+        <div class="tagline" id="taglineText">
+            Xây dựng công cụ, thư viện thông minh và khám phá tiềm năng của C# & Kotlin
         </div>
         <a href="https://github.com/csandkotlin" class="github-link" target="_blank" rel="noopener noreferrer">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
@@ -318,110 +437,198 @@
             github.com/csandkotlin
         </a>
         <div class="meta-stats">
-            <div class="stat-item"><strong>1</strong> public repository</div>
-            <div class="stat-item"><strong>C#</strong> · ngôn ngữ chính</div>
-            <div class="stat-item">MIT License · Mã nguồn mở</div>
+            <div class="stat-item"><strong>1</strong> <span id="statRepo">public repository</span></div>
+            <div class="stat-item"><strong>C#</strong> · <span id="statLang">primary language</span></div>
+            <div class="stat-item"><span id="statLicense">MIT License · Open source</span></div>
         </div>
     </div>
 
-    <!-- repositories section -->
     <div class="section-title">
-        📦 Kho lưu trữ nổi bật
-        <span>active</span>
+        📦 <span id="repoTitle">Kho lưu trữ nổi bật</span> <span>active</span>
     </div>
-    <div class="repo-grid" id="repo-grid">
-        <!-- Dữ liệu repository được lấy từ profile GitHub: https://github.com/csandkotlin?tab=repositories -->
-        <!-- Dự án NtAI: C#  -->
+    <div class="repo-grid">
         <div class="repo-card">
             <div class="repo-name">
                 NtAI
                 <code>public</code>
             </div>
-            <div class="repo-desc">
-                NtAI – Dự án nghiên cứu và ứng dụng trí tuệ nhân tạo, tập trung xây dựng mô hình hoặc pipeline thông minh bằng hệ sinh thái .NET / C#.
-                Hướng tới các giải pháp AI nhẹ, dễ tích hợp.
+            <div class="repo-desc" id="repoDesc">
+                NtAI – Dự án nghiên cứu và ứng dụng trí tuệ nhân tạo, tập trung xây dựng mô hình hoặc pipeline thông minh bằng hệ sinh thái .NET / C#. Hướng tới các giải pháp AI nhẹ, dễ tích hợp.
             </div>
             <div class="lang-badge">
                 <span style="background:#178600; width:12px; height:12px; border-radius:50%; display:inline-block;"></span>
                 C# · 100%
             </div>
             <div class="repo-meta">
-                <span style="font-size:0.75rem; color:#2c5a7a;">⭐ 1 · cập nhật gần đây</span>
+                <span style="font-size:0.75rem;">⭐ 1 · <span id="updateText">updated recently</span></span>
                 <a href="https://github.com/csandkotlin/NtAI" class="repo-link" target="_blank" rel="noopener">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                    Truy cập repo
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    <span id="visitRepoBtn">Truy cập repo</span>
                 </a>
             </div>
         </div>
-        <!-- Hiển thị thêm một thẻ thông báo vì chỉ có 1 repo, nhưng có thể mở rộng sau -->
     </div>
 
-    <!-- khu vực giới thiệu thêm về tổ chức, members & tầm nhìn -->
     <div class="info-note">
-        <p>
+        <p id="missionText">
             🧠 <strong>csandkotlin</strong> là nơi thử nghiệm, phát triển và chia sẻ các dự án chất lượng <br>
             tập trung vào hệ sinh thái <strong>C# (.NET)</strong> và <strong>Kotlin (JVM/Android)</strong>.
         </p>
-        <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.2rem; flex-wrap: wrap;">
-            <span style="background:#eef2ff; padding:0.2rem 1rem; border-radius:40px;">🔧 .NET 8 / C# 12</span>
-            <span style="background:#eef2ff; padding:0.2rem 1rem; border-radius:40px;">📱 Kotlin Multiplatform</span>
-            <span style="background:#eef2ff; padding:0.2rem 1rem; border-radius:40px;">🤖 AI & Machine Learning</span>
+        <div class="tech-stack" id="techStack">
+            <span>🔧 .NET 8 / C# 12</span>
+            <span>📱 Kotlin Multiplatform</span>
+            <span>🤖 AI & Machine Learning</span>
         </div>
     </div>
 
-    <!-- Phần thành viên (GitHub hiện không có thành viên công khai) -->
     <div class="section-title" style="margin-top: 2rem;">
-        👥 Cộng đồng & thành viên
-        <span>public members</span>
+        👥 <span id="communityTitle">Cộng đồng & thành viên</span> <span>public members</span>
     </div>
-    <div style="background: #ffffff; border-radius: 28px; border: 1px solid #eef2f8; padding: 1.8rem; text-align: center;">
-        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <p style="margin-top: 12px; color: #475569; font-weight: 500;">
-            Tổ chức hiện chưa có thành viên công khai trên GitHub.
-        </p>
-        <p style="font-size: 0.9rem; color: #617394; margin-top: 8px;">
-            csandkotlin đang trong giai đoạn khởi tạo — nhưng luôn chào đón đóng góp ý tưởng và mã nguồn.
-            Hãy theo dõi kho lưu trữ để cập nhật!
-        </p>
+    <div style="background: var(--bg-card); border-radius: 28px; border: 1px solid var(--border-light); padding: 1.8rem; text-align: center;">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <p style="margin-top: 12px; font-weight: 500;" id="noMembersText">Tổ chức hiện chưa có thành viên công khai trên GitHub.</p>
+        <p style="font-size: 0.9rem; margin-top: 8px;" id="inviteText">csandkotlin đang trong giai đoạn khởi tạo — nhưng luôn chào đón đóng góp ý tưởng và mã nguồn. Hãy theo dõi kho lưu trữ để cập nhật!</p>
         <div class="members-placeholder">
-            <span style="font-size:0.8rem; background:#f1f5f9; padding:4px 12px; border-radius:20px;">✨ Trở thành người đóng góp đầu tiên</span>
+            <span style="font-size:0.8rem; background: var(--badge-bg); padding:4px 12px; border-radius:20px; color: var(--badge-text);" id="contribCta">✨ Trở thành người đóng góp đầu tiên</span>
         </div>
     </div>
 
-    <!-- roadmap / future plans -->
     <div class="section-title" style="margin-top: 2rem;">
-        🚀 Hành trình sắp tới
+        🚀 <span id="roadmapTitle">Hành trình sắp tới</span>
     </div>
-    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
-        <div style="flex:1; background: white; border-radius: 1.5rem; padding: 1.2rem; border: 1px solid #e9edf2;">
-            <h3 style="font-weight: 700; margin-bottom: 0.5rem;">📌 NtAI nâng cấp</h3>
-            <p style="font-size:0.9rem; color:#2d3a4b;">Tích hợp thêm mô hình NLP và tối ưu inference bằng ML.NET.</p>
-        </div>
-        <div style="flex:1; background: white; border-radius: 1.5rem; padding: 1.2rem; border: 1px solid #e9edf2;">
-            <h3 style="font-weight: 700; margin-bottom: 0.5rem;">📌 Kotlin tools</h3>
-            <p style="font-size:0.9rem; color:#2d3a4b;">Kho lưu trữ dành riêng cho các tiện ích Kotlin, DSL và thư viện nhẹ.</p>
-        </div>
-        <div style="flex:1; background: white; border-radius: 1.5rem; padding: 1.2rem; border: 1px solid #e9edf2;">
-            <h3 style="font-weight: 700; margin-bottom: 0.5rem;">🌐 Trang tài liệu</h3>
-            <p style="font-size:0.9rem; color:#2d3a4b;">Xây dựng wiki chung cho org, hướng dẫn đóng góp và example.</p>
-        </div>
+    <div class="roadmap-grid">
+        <div class="roadmap-card"><h3 id="road1Title">📌 NtAI nâng cấp</h3><p id="road1Desc">Tích hợp thêm mô hình NLP và tối ưu inference bằng ML.NET.</p></div>
+        <div class="roadmap-card"><h3 id="road2Title">📌 Kotlin tools</h3><p id="road2Desc">Kho lưu trữ dành riêng cho các tiện ích Kotlin, DSL và thư viện nhẹ.</p></div>
+        <div class="roadmap-card"><h3 id="road3Title">🌐 Trang tài liệu</h3><p id="road3Desc">Xây dựng wiki chung cho org, hướng dẫn đóng góp và example.</p></div>
     </div>
 
-    <!-- footer với thông tin license và nguồn -->
     <div class="footer">
-        <p>© 2026 csandkotlin · Tổ chức phi lợi nhuận, mã nguồn mở theo giấy phép MIT</p>
-        <p style="margin-top: 8px;">Dữ liệu được tổng hợp từ <a href="https://github.com/csandkotlin" style="color:#2563eb; text-decoration:none;" target="_blank">GitHub.com/csandkotlin</a> — 1 repository công khai (NtAI) bằng C#.</p>
-        <p style="margin-top: 0.5rem; font-size:0.75rem;">Trang web được xây dựng với tinh thần minh bạch, kết nối cộng đồng dev Việt Nam & quốc tế.</p>
+        <p>© 2026 csandkotlin · <span id="footerLicense">tổ chức phi lợi nhuận, mã nguồn mở theo giấy phép MIT</span></p>
+        <p style="margin-top: 8px;"><span id="footerData">Dữ liệu được tổng hợp từ</span> <a href="https://github.com/csandkotlin" style="color:var(--link-color); text-decoration:none;" target="_blank">GitHub.com/csandkotlin</a> — 1 repository công khai (NtAI) bằng C#.</p>
     </div>
 </div>
-<!-- script nhẹ để đảm bảo hiển thị dữ liệu động từ github (tuy nhiên dữ liệu đã được hardcode phù hợp với nội dung org) -->
+
 <script>
-    // (không cần fetch vì dữ liệu đã có sẵn, nhưng có thể log thông tin cho dev)
-    console.log("csandkotlin org page — based on official GitHub profile: 1 repo, C#, NtAI.");
-    // Optional: thêm hiệu ứng hover nhẹ, hoặc kiểm tra responsive
-    const cards = document.querySelectorAll('.repo-card');
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', () => {});
+    // Bilingual dictionary
+    const langData = {
+        vi: {
+            orgName: "csandkotlin",
+            tagline: "Xây dựng công cụ, thư viện thông minh và khám phá tiềm năng của C# & Kotlin",
+            statRepo: "kho lưu trữ công khai",
+            statLang: "ngôn ngữ chính",
+            statLicense: "MIT License · Mã nguồn mở",
+            repoTitle: "Kho lưu trữ nổi bật",
+            repoDesc: "NtAI – Dự án nghiên cứu và ứng dụng trí tuệ nhân tạo, tập trung xây dựng mô hình hoặc pipeline thông minh bằng hệ sinh thái .NET / C#. Hướng tới các giải pháp AI nhẹ, dễ tích hợp.",
+            updateText: "cập nhật gần đây",
+            visitRepoBtn: "Truy cập repo",
+            missionText: "🧠 csandkotlin là nơi thử nghiệm, phát triển và chia sẻ các dự án chất lượng tập trung vào hệ sinh thái C# (.NET) và Kotlin (JVM/Android).",
+            communityTitle: "Cộng đồng & thành viên",
+            noMembersText: "Tổ chức hiện chưa có thành viên công khai trên GitHub.",
+            inviteText: "csandkotlin đang trong giai đoạn khởi tạo — nhưng luôn chào đón đóng góp ý tưởng và mã nguồn. Hãy theo dõi kho lưu trữ để cập nhật!",
+            contribCta: "✨ Trở thành người đóng góp đầu tiên",
+            roadmapTitle: "Hành trình sắp tới",
+            road1Title: "📌 NtAI nâng cấp",
+            road1Desc: "Tích hợp thêm mô hình NLP và tối ưu inference bằng ML.NET.",
+            road2Title: "📌 Kotlin tools",
+            road2Desc: "Kho lưu trữ dành riêng cho các tiện ích Kotlin, DSL và thư viện nhẹ.",
+            road3Title: "🌐 Trang tài liệu",
+            road3Desc: "Xây dựng wiki chung cho org, hướng dẫn đóng góp và example.",
+            footerLicense: "tổ chức phi lợi nhuận, mã nguồn mở theo giấy phép MIT",
+            footerData: "Dữ liệu được tổng hợp từ"
+        },
+        en: {
+            orgName: "csandkotlin",
+            tagline: "Building smart tools, libraries and exploring the potential of C# & Kotlin",
+            statRepo: "public repository",
+            statLang: "primary language",
+            statLicense: "MIT License · Open source",
+            repoTitle: "Featured repositories",
+            repoDesc: "NtAI – Research and applied AI project, building intelligent models/pipelines using .NET / C# ecosystem. Aiming for lightweight, easy-to-integrate AI solutions.",
+            updateText: "recently updated",
+            visitRepoBtn: "Visit repo",
+            missionText: "🧠 csandkotlin is a place to experiment, develop and share quality projects focused on C# (.NET) and Kotlin (JVM/Android) ecosystems.",
+            communityTitle: "Community & members",
+            noMembersText: "The organization currently has no public members on GitHub.",
+            inviteText: "csandkotlin is in its early stages — but always welcomes contributions of ideas and source code. Follow the repository for updates!",
+            contribCta: "✨ Become the first contributor",
+            roadmapTitle: "Upcoming journey",
+            road1Title: "📌 NtAI upgrade",
+            road1Desc: "Integrate more NLP models and optimize inference using ML.NET.",
+            road2Title: "📌 Kotlin tools",
+            road2Desc: "Repository dedicated to Kotlin utilities, DSLs and lightweight libraries.",
+            road3Title: "🌐 Documentation site",
+            road3Desc: "Build a common wiki for the org, contribution guides and examples.",
+            footerLicense: "non-profit organization, open source under MIT license",
+            footerData: "Data aggregated from"
+        }
+    };
+
+    let currentLang = 'vi'; // default vietnamese
+
+    function updateLanguage() {
+        const t = langData[currentLang];
+        document.getElementById('orgName').innerText = t.orgName;
+        document.getElementById('taglineText').innerText = t.tagline;
+        document.getElementById('statRepo').innerText = t.statRepo;
+        document.getElementById('statLang').innerText = t.statLang;
+        document.getElementById('statLicense').innerText = t.statLicense;
+        document.getElementById('repoTitle').innerText = t.repoTitle;
+        document.getElementById('repoDesc').innerText = t.repoDesc;
+        document.getElementById('updateText').innerText = t.updateText;
+        document.getElementById('visitRepoBtn').innerText = t.visitRepoBtn;
+        document.getElementById('missionText').innerHTML = t.missionText;
+        document.getElementById('communityTitle').innerText = t.communityTitle;
+        document.getElementById('noMembersText').innerText = t.noMembersText;
+        document.getElementById('inviteText').innerText = t.inviteText;
+        document.getElementById('contribCta').innerText = t.contribCta;
+        document.getElementById('roadmapTitle').innerText = t.roadmapTitle;
+        document.getElementById('road1Title').innerText = t.road1Title;
+        document.getElementById('road1Desc').innerText = t.road1Desc;
+        document.getElementById('road2Title').innerText = t.road2Title;
+        document.getElementById('road2Desc').innerText = t.road2Desc;
+        document.getElementById('road3Title').innerText = t.road3Title;
+        document.getElementById('road3Desc').innerText = t.road3Desc;
+        document.getElementById('footerLicense').innerText = t.footerLicense;
+        document.getElementById('footerData').innerText = t.footerData;
+    }
+
+    // Dark mode persistence & toggle
+    function initDarkMode() {
+        const saved = localStorage.getItem('darkMode');
+        if (saved === 'enabled') {
+            document.body.classList.add('dark');
+        }
+        const btn = document.getElementById('darkModeToggleBtn');
+        btn.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            btn.style.transform = 'scale(0.98)';
+            setTimeout(() => { btn.style.transform = ''; }, 150);
+        });
+    }
+
+    // Language toggle with fade effect
+    function initLanguageToggle() {
+        const btn = document.getElementById('langToggleBtn');
+        btn.addEventListener('click', () => {
+            // simple fade-out / fade-in for main container
+            const container = document.getElementById('app');
+            container.style.animation = 'none';
+            container.offsetHeight; // reflow
+            container.style.animation = 'fadeIn 0.3s ease forwards';
+            currentLang = currentLang === 'vi' ? 'en' : 'vi';
+            updateLanguage();
+            btn.innerHTML = currentLang === 'vi' ? '🌐 Tiếng Việt / English' : '🌐 English / Vietnamese';
+        });
+    }
+
+    // Add fade-in for dynamic content
+    document.addEventListener('DOMContentLoaded', () => {
+        initDarkMode();
+        initLanguageToggle();
+        updateLanguage();
+        console.log('csandkotlin page with dark mode + bilingual + fade animations ready');
     });
 </script>
 </body>
