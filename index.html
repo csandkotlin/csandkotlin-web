@@ -6,7 +6,7 @@
     <title>csandkotlin · tổ chức phát triển mã nguồn mở</title>
     <meta name="description" content="Trang web giới thiệu tổ chức csandkotlin trên GitHub — nơi lưu trữ dự án NtAI và các sáng kiến mã nguồn mở bằng C# & Kotlin.">
     <meta name="theme-color" content="#0a0c10">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,7 +15,6 @@
             transition: background-color 0.3s ease, border-color 0.2s ease, color 0.2s ease;
         }
 
-        /* Light mode (default) */
         :root {
             --bg-body: #f9fafc;
             --bg-card: #ffffff;
@@ -29,14 +28,13 @@
             --link-color: #2563eb;
             --github-bg: #0d1117;
             --github-text: white;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.03);
             --shadow-md: 0 5px 12px rgba(0, 0, 0, 0.02);
             --shadow-hover: 0 20px 30px -12px rgba(0, 0, 0, 0.08);
             --gradient-start: #1e2b3c;
             --gradient-end: #1e3a5f;
+            --input-bg: #ffffff;
         }
 
-        /* Dark mode */
         body.dark {
             --bg-body: #0a0c10;
             --bg-card: #161b22;
@@ -50,11 +48,11 @@
             --link-color: #58a6ff;
             --github-bg: #238636;
             --github-text: #ffffff;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
             --shadow-md: 0 5px 12px rgba(0, 0, 0, 0.15);
             --shadow-hover: 0 20px 30px -12px rgba(0, 0, 0, 0.3);
             --gradient-start: #2d4a6e;
             --gradient-end: #1f3a5f;
+            --input-bg: #0d1117;
         }
 
         body {
@@ -65,39 +63,13 @@
             scroll-behavior: smooth;
         }
 
-        /* Fade animation for page content */
         .fade-in {
             animation: fadeIn 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Background subtle pattern */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(circle at 15% 30%, rgba(100, 108, 255, 0.03) 0%, transparent 35%),
-                              radial-gradient(circle at 85% 70%, rgba(0, 200, 200, 0.02) 0%, transparent 40%);
-            pointer-events: none;
-            z-index: -2;
-        }
-
-        body.dark::before {
-            background-image: radial-gradient(circle at 15% 30%, rgba(100, 108, 255, 0.08) 0%, transparent 40%),
-                              radial-gradient(circle at 85% 70%, rgba(0, 200, 200, 0.05) 0%, transparent 45%);
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .container {
@@ -106,13 +78,13 @@
             padding: 2rem 1.5rem 4rem;
         }
 
-        /* Header controls: dark mode toggle + language switcher */
         .header-controls {
             display: flex;
             justify-content: flex-end;
-            gap: 1rem;
+            gap: 1.5rem;
             margin-bottom: 1rem;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .ctrl-btn {
@@ -128,7 +100,6 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            backdrop-filter: blur(4px);
         }
 
         .ctrl-btn:hover {
@@ -137,7 +108,70 @@
             color: var(--text-primary);
         }
 
-        /* Hero section */
+        /* Dark mode toggle switch - FIXED */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #3b82f6;
+            border-radius: 34px;
+            transition: 0.3s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "☀️";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            height: 24px;
+            width: 24px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Khi bật dark mode (checked) -> slider nền tối, icon mặt trăng */
+        input:checked + .slider {
+            background-color: #2c3e50;
+        }
+
+        input:checked + .slider:before {
+            content: "🌙";
+            transform: translateX(24px);
+        }
+
+        .theme-icon {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
         .hero {
             display: flex;
             flex-direction: column;
@@ -191,7 +225,6 @@
             text-decoration: none;
             transition: all 0.2s ease;
             margin-top: 0.5rem;
-            font-size: 0.95rem;
         }
 
         .github-link:hover {
@@ -214,19 +247,92 @@
             font-size: 0.9rem;
             font-weight: 500;
             border: 1px solid var(--border-light);
-            color: var(--text-secondary);
         }
 
-        .stat-item strong {
-            font-weight: 800;
+        /* Filter & Search Bar */
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.7rem 1rem 0.7rem 2.5rem;
+            border-radius: 40px;
+            border: 1px solid var(--border-light);
+            background: var(--input-bg);
             color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--link-color);
+        }
+
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        .filter-select {
+            padding: 0.7rem 1rem;
+            border-radius: 40px;
+            border: 1px solid var(--border-light);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+            min-width: 160px;
+        }
+
+        .filter-select:hover {
+            border-color: var(--border-hover);
+        }
+
+        .reset-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            padding: 0.7rem 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .reset-btn:hover {
+            border-color: var(--border-hover);
+            color: var(--text-primary);
+        }
+
+        .result-count {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
         }
 
         .section-title {
             font-size: 1.8rem;
             font-weight: 700;
-            margin: 2.5rem 0 1rem;
-            letter-spacing: -0.3px;
+            margin: 2rem 0 0.5rem;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -243,7 +349,7 @@
 
         .repo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 1.8rem;
             margin: 1.5rem 0 2rem;
         }
@@ -254,7 +360,6 @@
             padding: 1.5rem;
             transition: all 0.25s ease;
             border: 1px solid var(--border-light);
-            box-shadow: var(--shadow-md);
         }
 
         .repo-card:hover {
@@ -264,19 +369,21 @@
         }
 
         .repo-name {
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
             margin-bottom: 0.5rem;
+            word-break: break-word;
         }
 
         .repo-name code {
             background: var(--badge-bg);
             padding: 4px 10px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             font-weight: 600;
             color: var(--badge-text);
         }
@@ -284,8 +391,9 @@
         .repo-desc {
             color: var(--text-secondary);
             margin: 0.75rem 0 1rem;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             line-height: 1.45;
+            min-height: 60px;
         }
 
         .lang-badge {
@@ -295,7 +403,7 @@
             background: var(--badge-bg);
             padding: 0.25rem 0.8rem;
             border-radius: 30px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 500;
             color: var(--badge-text);
             width: fit-content;
@@ -305,9 +413,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 1.2rem;
+            margin-top: 1rem;
             flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .meta-stats-row {
+            display: flex;
             gap: 12px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            align-items: center;
+        }
+
+        .meta-stats-row span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .repo-link {
@@ -315,7 +437,7 @@
             border: 1px solid var(--border-light);
             padding: 0.4rem 1rem;
             border-radius: 40px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 500;
             text-decoration: none;
             color: var(--text-secondary);
@@ -331,41 +453,10 @@
             border-color: var(--github-bg);
         }
 
-        .info-note {
-            background: var(--bg-card);
-            border-radius: 28px;
-            padding: 1.6rem 2rem;
-            margin-top: 3rem;
+        .loading {
             text-align: center;
-            border: 1px solid var(--border-light);
-        }
-
-        .info-note p {
+            padding: 2rem;
             color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .tech-stack {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1.2rem;
-            flex-wrap: wrap;
-        }
-
-        .tech-stack span {
-            background: var(--badge-bg);
-            padding: 0.2rem 1rem;
-            border-radius: 40px;
-            color: var(--badge-text);
-        }
-
-        .members-placeholder {
-            margin-top: 2rem;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
         }
 
         .footer {
@@ -377,259 +468,316 @@
             padding-top: 2rem;
         }
 
-        .roadmap-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .roadmap-card {
-            flex: 1;
-            background: var(--bg-card);
-            border-radius: 1.5rem;
-            padding: 1.2rem;
-            border: 1px solid var(--border-light);
-        }
-
-        .roadmap-card h3 {
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .roadmap-card p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
         @media (max-width: 680px) {
             .container { padding: 1.2rem 1rem 2.5rem; }
             h1 { font-size: 2.3rem; }
             .repo-grid { grid-template-columns: 1fr; }
             .section-title { font-size: 1.5rem; }
-            .roadmap-grid { flex-direction: column; }
+            .filter-section { flex-direction: column; align-items: stretch; }
+            .search-box { width: 100%; }
+            .filter-select, .reset-btn { width: 100%; }
         }
     </style>
 </head>
 <body>
-<div class="container fade-in" id="app">
+<div class="container fade-in">
     <div class="header-controls">
         <button class="ctrl-btn" id="langToggleBtn">🌐 Tiếng Việt / English</button>
-        <button class="ctrl-btn" id="darkModeToggleBtn">🌙 Dark Mode</button>
+        <div class="theme-switch-wrapper">
+            <span class="theme-icon">🌙</span>
+            <label class="theme-switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider"></span>
+            </label>
+            <span class="theme-icon">☀️</span>
+        </div>
     </div>
 
     <div class="hero">
         <div class="org-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.58 0-.287-.01-1.05-.015-2.06-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.082-.73.082-.73 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.698.83.578C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/>
-            </svg>
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.58 0-.287-.01-1.05-.015-2.06-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.082-.73.082-.73 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.698.83.578C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
             GitHub Organization
         </div>
-        <h1 id="orgName">csandkotlin</h1>
-        <div class="tagline" id="taglineText">
-            Xây dựng công cụ, thư viện thông minh và khám phá tiềm năng của C# & Kotlin
-        </div>
-        <a href="https://github.com/csandkotlin" class="github-link" target="_blank" rel="noopener noreferrer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.604-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.192.69.8.575C20.565 21.795 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-            </svg>
-            github.com/csandkotlin
-        </a>
-        <div class="meta-stats">
-            <div class="stat-item"><strong>1</strong> <span id="statRepo">public repository</span></div>
-            <div class="stat-item"><strong>C#</strong> · <span id="statLang">primary language</span></div>
-            <div class="stat-item"><span id="statLicense">MIT License · Open source</span></div>
+        <h1>csandkotlin</h1>
+        <div class="tagline" id="tagline">Đang tải dữ liệu...</div>
+        <a href="https://github.com/csandkotlin" class="github-link" target="_blank">github.com/csandkotlin</a>
+        <div class="meta-stats" id="metaStats">
+            <div class="stat-item">⏳ Đang tải...</div>
         </div>
     </div>
 
-    <div class="section-title">
-        📦 <span id="repoTitle">Kho lưu trữ nổi bật</span> <span>active</span>
-    </div>
-    <div class="repo-grid">
-        <div class="repo-card">
-            <div class="repo-name">
-                NtAI
-                <code>public</code>
-            </div>
-            <div class="repo-desc" id="repoDesc">
-                NtAI – Dự án nghiên cứu và ứng dụng trí tuệ nhân tạo, tập trung xây dựng mô hình hoặc pipeline thông minh bằng hệ sinh thái .NET / C#. Hướng tới các giải pháp AI nhẹ, dễ tích hợp.
-            </div>
-            <div class="lang-badge">
-                <span style="background:#178600; width:12px; height:12px; border-radius:50%; display:inline-block;"></span>
-                C# · 100%
-            </div>
-            <div class="repo-meta">
-                <span style="font-size:0.75rem;">⭐ 1 · <span id="updateText">updated recently</span></span>
-                <a href="https://github.com/csandkotlin/NtAI" class="repo-link" target="_blank" rel="noopener">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                    <span id="visitRepoBtn">Truy cập repo</span>
-                </a>
-            </div>
+    <!-- Filter & Search Section -->
+    <div class="filter-section">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Tìm kiếm repository...">
         </div>
+        <select id="langFilter" class="filter-select">
+            <option value="all">📁 Tất cả ngôn ngữ</option>
+        </select>
+        <button id="resetFilters" class="reset-btn">🔄 Đặt lại bộ lọc</button>
     </div>
+    <div id="resultCount" class="result-count"></div>
 
-    <div class="info-note">
-        <p id="missionText">
-            🧠 <strong>csandkotlin</strong> là nơi thử nghiệm, phát triển và chia sẻ các dự án chất lượng <br>
-            tập trung vào hệ sinh thái <strong>C# (.NET)</strong> và <strong>Kotlin (JVM/Android)</strong>.
-        </p>
-        <div class="tech-stack" id="techStack">
-            <span>🔧 .NET 8 / C# 12</span>
-            <span>📱 Kotlin Multiplatform</span>
-            <span>🤖 AI & Machine Learning</span>
-        </div>
-    </div>
-
-    <div class="section-title" style="margin-top: 2rem;">
-        👥 <span id="communityTitle">Cộng đồng & thành viên</span> <span>public members</span>
-    </div>
-    <div style="background: var(--bg-card); border-radius: 28px; border: 1px solid var(--border-light); padding: 1.8rem; text-align: center;">
-        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <p style="margin-top: 12px; font-weight: 500;" id="noMembersText">Tổ chức hiện chưa có thành viên công khai trên GitHub.</p>
-        <p style="font-size: 0.9rem; margin-top: 8px;" id="inviteText">csandkotlin đang trong giai đoạn khởi tạo — nhưng luôn chào đón đóng góp ý tưởng và mã nguồn. Hãy theo dõi kho lưu trữ để cập nhật!</p>
-        <div class="members-placeholder">
-            <span style="font-size:0.8rem; background: var(--badge-bg); padding:4px 12px; border-radius:20px; color: var(--badge-text);" id="contribCta">✨ Trở thành người đóng góp đầu tiên</span>
-        </div>
-    </div>
-
-    <div class="section-title" style="margin-top: 2rem;">
-        🚀 <span id="roadmapTitle">Hành trình sắp tới</span>
-    </div>
-    <div class="roadmap-grid">
-        <div class="roadmap-card"><h3 id="road1Title">📌 NtAI nâng cấp</h3><p id="road1Desc">Tích hợp thêm mô hình NLP và tối ưu inference bằng ML.NET.</p></div>
-        <div class="roadmap-card"><h3 id="road2Title">📌 Kotlin tools</h3><p id="road2Desc">Kho lưu trữ dành riêng cho các tiện ích Kotlin, DSL và thư viện nhẹ.</p></div>
-        <div class="roadmap-card"><h3 id="road3Title">🌐 Trang tài liệu</h3><p id="road3Desc">Xây dựng wiki chung cho org, hướng dẫn đóng góp và example.</p></div>
+    <div class="section-title">📦 <span id="repoTitle">Kho lưu trữ</span> <span>active</span></div>
+    <div id="reposContainer" class="repo-grid">
+        <div class="loading">⏳ Đang tải danh sách repository từ GitHub...</div>
     </div>
 
     <div class="footer">
-        <p>© 2026 csandkotlin · <span id="footerLicense">tổ chức phi lợi nhuận, mã nguồn mở theo giấy phép MIT</span></p>
-        <p style="margin-top: 8px;"><span id="footerData">Dữ liệu được tổng hợp từ</span> <a href="https://github.com/csandkotlin" style="color:var(--link-color); text-decoration:none;" target="_blank">GitHub.com/csandkotlin</a> — 1 repository công khai (NtAI) bằng C#.</p>
+        <p>© 2026 csandkotlin · <span id="footerText">tự động cập nhật từ GitHub API</span></p>
+        <p><span id="apiNote">Dữ liệu repository và số star được lấy trực tiếp từ GitHub</span></p>
     </div>
 </div>
 
 <script>
-    // Bilingual dictionary
+    // ==================== NGÔN NGỮ ====================
     const langData = {
         vi: {
-            orgName: "csandkotlin",
             tagline: "Xây dựng công cụ, thư viện thông minh và khám phá tiềm năng của C# & Kotlin",
-            statRepo: "kho lưu trữ công khai",
-            statLang: "ngôn ngữ chính",
-            statLicense: "MIT License · Mã nguồn mở",
-            repoTitle: "Kho lưu trữ nổi bật",
-            repoDesc: "NtAI – Dự án nghiên cứu và ứng dụng trí tuệ nhân tạo, tập trung xây dựng mô hình hoặc pipeline thông minh bằng hệ sinh thái .NET / C#. Hướng tới các giải pháp AI nhẹ, dễ tích hợp.",
-            updateText: "cập nhật gần đây",
-            visitRepoBtn: "Truy cập repo",
-            missionText: "🧠 csandkotlin là nơi thử nghiệm, phát triển và chia sẻ các dự án chất lượng tập trung vào hệ sinh thái C# (.NET) và Kotlin (JVM/Android).",
-            communityTitle: "Cộng đồng & thành viên",
-            noMembersText: "Tổ chức hiện chưa có thành viên công khai trên GitHub.",
-            inviteText: "csandkotlin đang trong giai đoạn khởi tạo — nhưng luôn chào đón đóng góp ý tưởng và mã nguồn. Hãy theo dõi kho lưu trữ để cập nhật!",
-            contribCta: "✨ Trở thành người đóng góp đầu tiên",
-            roadmapTitle: "Hành trình sắp tới",
-            road1Title: "📌 NtAI nâng cấp",
-            road1Desc: "Tích hợp thêm mô hình NLP và tối ưu inference bằng ML.NET.",
-            road2Title: "📌 Kotlin tools",
-            road2Desc: "Kho lưu trữ dành riêng cho các tiện ích Kotlin, DSL và thư viện nhẹ.",
-            road3Title: "🌐 Trang tài liệu",
-            road3Desc: "Xây dựng wiki chung cho org, hướng dẫn đóng góp và example.",
-            footerLicense: "tổ chức phi lợi nhuận, mã nguồn mở theo giấy phép MIT",
-            footerData: "Dữ liệu được tổng hợp từ"
+            repoTitle: "Kho lưu trữ",
+            footerText: "tổ chức phi lợi nhuận, mã nguồn mở",
+            apiNote: "Dữ liệu repository và số star được lấy trực tiếp từ GitHub",
+            loading: "Đang tải danh sách repository từ GitHub...",
+            noRepos: "Không tìm thấy repository nào phù hợp.",
+            stars: "sao",
+            forks: "nhánh",
+            updated: "cập nhật",
+            visit: "Truy cập",
+            searchPlaceholder: "Tìm kiếm repository...",
+            allLanguages: "Tất cả ngôn ngữ",
+            resetBtn: "Đặt lại bộ lọc",
+            resultCount: (count, total) => `Hiển thị ${count}/${total} repository`
         },
         en: {
-            orgName: "csandkotlin",
-            tagline: "Building smart tools, libraries and exploring the potential of C# & Kotlin",
-            statRepo: "public repository",
-            statLang: "primary language",
-            statLicense: "MIT License · Open source",
-            repoTitle: "Featured repositories",
-            repoDesc: "NtAI – Research and applied AI project, building intelligent models/pipelines using .NET / C# ecosystem. Aiming for lightweight, easy-to-integrate AI solutions.",
-            updateText: "recently updated",
-            visitRepoBtn: "Visit repo",
-            missionText: "🧠 csandkotlin is a place to experiment, develop and share quality projects focused on C# (.NET) and Kotlin (JVM/Android) ecosystems.",
-            communityTitle: "Community & members",
-            noMembersText: "The organization currently has no public members on GitHub.",
-            inviteText: "csandkotlin is in its early stages — but always welcomes contributions of ideas and source code. Follow the repository for updates!",
-            contribCta: "✨ Become the first contributor",
-            roadmapTitle: "Upcoming journey",
-            road1Title: "📌 NtAI upgrade",
-            road1Desc: "Integrate more NLP models and optimize inference using ML.NET.",
-            road2Title: "📌 Kotlin tools",
-            road2Desc: "Repository dedicated to Kotlin utilities, DSLs and lightweight libraries.",
-            road3Title: "🌐 Documentation site",
-            road3Desc: "Build a common wiki for the org, contribution guides and examples.",
-            footerLicense: "non-profit organization, open source under MIT license",
-            footerData: "Data aggregated from"
+            tagline: "Building smart tools, libraries and exploring C# & Kotlin potential",
+            repoTitle: "Repositories",
+            footerText: "non-profit organization, open source",
+            apiNote: "Repository data & star counts fetched live from GitHub API",
+            loading: "Loading repositories from GitHub...",
+            noRepos: "No repositories match your filters.",
+            stars: "stars",
+            forks: "forks",
+            updated: "updated",
+            visit: "Visit",
+            searchPlaceholder: "Search repositories...",
+            allLanguages: "All languages",
+            resetBtn: "Reset filters",
+            resultCount: (count, total) => `Showing ${count}/${total} repositories`
         }
     };
 
-    let currentLang = 'vi'; // default vietnamese
+    let currentLang = 'vi';
+    let reposData = [];
+    let filteredRepos = [];
+    let currentSearch = '';
+    let currentLanguage = 'all';
 
-    function updateLanguage() {
+    function updateUILanguage() {
         const t = langData[currentLang];
-        document.getElementById('orgName').innerText = t.orgName;
-        document.getElementById('taglineText').innerText = t.tagline;
-        document.getElementById('statRepo').innerText = t.statRepo;
-        document.getElementById('statLang').innerText = t.statLang;
-        document.getElementById('statLicense').innerText = t.statLicense;
+        document.getElementById('tagline').innerText = t.tagline;
         document.getElementById('repoTitle').innerText = t.repoTitle;
-        document.getElementById('repoDesc').innerText = t.repoDesc;
-        document.getElementById('updateText').innerText = t.updateText;
-        document.getElementById('visitRepoBtn').innerText = t.visitRepoBtn;
-        document.getElementById('missionText').innerHTML = t.missionText;
-        document.getElementById('communityTitle').innerText = t.communityTitle;
-        document.getElementById('noMembersText').innerText = t.noMembersText;
-        document.getElementById('inviteText').innerText = t.inviteText;
-        document.getElementById('contribCta').innerText = t.contribCta;
-        document.getElementById('roadmapTitle').innerText = t.roadmapTitle;
-        document.getElementById('road1Title').innerText = t.road1Title;
-        document.getElementById('road1Desc').innerText = t.road1Desc;
-        document.getElementById('road2Title').innerText = t.road2Title;
-        document.getElementById('road2Desc').innerText = t.road2Desc;
-        document.getElementById('road3Title').innerText = t.road3Title;
-        document.getElementById('road3Desc').innerText = t.road3Desc;
-        document.getElementById('footerLicense').innerText = t.footerLicense;
-        document.getElementById('footerData').innerText = t.footerData;
+        document.getElementById('footerText').innerText = t.footerText;
+        document.getElementById('apiNote').innerText = t.apiNote;
+        document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+        document.getElementById('resetFilters').innerText = t.resetBtn;
+        
+        // Cập nhật option all trong select
+        const langSelect = document.getElementById('langFilter');
+        if (langSelect.options[0]) {
+            langSelect.options[0].text = `📁 ${t.allLanguages}`;
+        }
+        
+        applyFiltersAndRender();
     }
 
-    // Dark mode persistence & toggle
-    function initDarkMode() {
-        const saved = localStorage.getItem('darkMode');
-        if (saved === 'enabled') {
-            document.body.classList.add('dark');
+    // ==================== GITHUB API ====================
+    async function fetchGitHubData() {
+        const orgName = 'csandkotlin';
+        const apiUrl = `https://api.github.com/orgs/${orgName}/repos?per_page=100&sort=updated`;
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const repos = await response.json();
+            reposData = repos.filter(repo => repo.name !== 'csandkotlin-web');
+            updateLanguageFilterOptions();
+            updateStatsAndRepos();
+        } catch (error) {
+            console.error('Lỗi khi gọi GitHub API:', error);
+            document.getElementById('metaStats').innerHTML = '<div class="stat-item">❌ Không thể tải dữ liệu từ GitHub</div>';
+            document.getElementById('reposContainer').innerHTML = '<div class="loading">❌ Lỗi kết nối GitHub API. Thử lại sau.</div>';
         }
-        const btn = document.getElementById('darkModeToggleBtn');
-        btn.addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-            const isDark = document.body.classList.contains('dark');
-            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
-            btn.style.transform = 'scale(0.98)';
-            setTimeout(() => { btn.style.transform = ''; }, 150);
+    }
+
+    function updateLanguageFilterOptions() {
+        const langMap = new Map();
+        reposData.forEach(repo => {
+            if (repo.language) {
+                langMap.set(repo.language, (langMap.get(repo.language) || 0) + 1);
+            }
+        });
+        
+        const sortedLangs = Array.from(langMap.keys()).sort();
+        const select = document.getElementById('langFilter');
+        const t = langData[currentLang];
+        
+        // Giữ option all
+        select.innerHTML = `<option value="all">📁 ${t.allLanguages}</option>`;
+        
+        sortedLangs.forEach(lang => {
+            const count = langMap.get(lang);
+            select.innerHTML += `<option value="${lang}">${lang} (${count})</option>`;
         });
     }
 
-    // Language toggle with fade effect
+    function updateStatsAndRepos() {
+        const totalRepos = reposData.length;
+        const totalStars = reposData.reduce((sum, repo) => sum + repo.stargazers_count, 0);
+        const totalForks = reposData.reduce((sum, repo) => sum + repo.forks_count, 0);
+        const langCount = {};
+        reposData.forEach(repo => {
+            if (repo.language) langCount[repo.language] = (langCount[repo.language] || 0) + 1;
+        });
+        let topLang = Object.keys(langCount).length ? Object.keys(langCount).reduce((a,b) => langCount[a] > langCount[b] ? a : b) : 'C#';
+        
+        const statsHtml = `
+            <div class="stat-item"><strong>${totalRepos}</strong> <span>${currentLang === 'vi' ? 'repository' : 'repositories'}</span></div>
+            <div class="stat-item"><strong>${totalStars}</strong> ⭐ <span>${currentLang === 'vi' ? 'tổng số sao' : 'total stars'}</span></div>
+            <div class="stat-item"><strong>${totalForks}</strong> 🍴 <span>${currentLang === 'vi' ? 'tổng số fork' : 'total forks'}</span></div>
+            <div class="stat-item"><strong>${topLang}</strong> · <span>${currentLang === 'vi' ? 'ngôn ngữ chính' : 'primary language'}</span></div>
+        `;
+        document.getElementById('metaStats').innerHTML = statsHtml;
+        applyFiltersAndRender();
+    }
+
+    function applyFiltersAndRender() {
+        const searchTerm = currentSearch.toLowerCase();
+        const languageFilter = currentLanguage;
+        
+        filteredRepos = reposData.filter(repo => {
+            // Lọc theo tìm kiếm
+            const matchesSearch = searchTerm === '' || 
+                repo.name.toLowerCase().includes(searchTerm) || 
+                (repo.description && repo.description.toLowerCase().includes(searchTerm));
+            
+            // Lọc theo ngôn ngữ
+            const matchesLanguage = languageFilter === 'all' || repo.language === languageFilter;
+            
+            return matchesSearch && matchesLanguage;
+        });
+        
+        renderRepos();
+        updateResultCount();
+    }
+
+    function updateResultCount() {
+        const t = langData[currentLang];
+        const countElem = document.getElementById('resultCount');
+        countElem.textContent = t.resultCount(filteredRepos.length, reposData.length);
+    }
+
+    function renderRepos() {
+        const container = document.getElementById('reposContainer');
+        const t = langData[currentLang];
+        
+        if (!filteredRepos.length) {
+            container.innerHTML = `<div class="loading">${t.noRepos}</div>`;
+            return;
+        }
+        
+        container.innerHTML = filteredRepos.map(repo => {
+            const updatedDate = new Date(repo.updated_at).toLocaleDateString(currentLang === 'vi' ? 'vi-VN' : 'en-US');
+            return `
+                <div class="repo-card">
+                    <div class="repo-name">
+                        ${repo.name}
+                        <code>${repo.private ? 'private' : 'public'}</code>
+                    </div>
+                    <div class="repo-desc">${repo.description || (currentLang === 'vi' ? 'Không có mô tả' : 'No description')}</div>
+                    ${repo.language ? `<div class="lang-badge"><span style="background:#178600; width:12px; height:12px; border-radius:50%; display:inline-block;"></span> ${repo.language}</div>` : ''}
+                    <div class="repo-meta">
+                        <div class="meta-stats-row">
+                            <span>⭐ ${repo.stargazers_count} ${t.stars}</span>
+                            <span>🍴 ${repo.forks_count} ${t.forks}</span>
+                            <span>📅 ${t.updated} ${updatedDate}</span>
+                        </div>
+                        <a href="${repo.html_url}" class="repo-link" target="_blank">🔗 ${t.visit}</a>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ==================== FILTER EVENT HANDLERS ====================
+    function setupFilters() {
+        const searchInput = document.getElementById('searchInput');
+        const langFilter = document.getElementById('langFilter');
+        const resetBtn = document.getElementById('resetFilters');
+        
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            applyFiltersAndRender();
+        });
+        
+        langFilter.addEventListener('change', (e) => {
+            currentLanguage = e.target.value;
+            applyFiltersAndRender();
+        });
+        
+        resetBtn.addEventListener('click', () => {
+            currentSearch = '';
+            currentLanguage = 'all';
+            searchInput.value = '';
+            langFilter.value = 'all';
+            applyFiltersAndRender();
+        });
+    }
+
+    // ==================== DARK MODE SWITCH (FIXED) ====================
+    function initDarkMode() {
+        const toggleSwitch = document.getElementById('darkModeToggle');
+        const saved = localStorage.getItem('darkMode');
+        
+        // Mặc định: light mode (unchecked)
+        if (saved === 'enabled') {
+            document.body.classList.add('dark');
+            toggleSwitch.checked = true;
+        } else {
+            document.body.classList.remove('dark');
+            toggleSwitch.checked = false;
+        }
+        
+        toggleSwitch.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                document.body.classList.add('dark');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+    }
+
+    // ==================== LANGUAGE TOGGLE ====================
     function initLanguageToggle() {
         const btn = document.getElementById('langToggleBtn');
         btn.addEventListener('click', () => {
-            // simple fade-out / fade-in for main container
-            const container = document.getElementById('app');
-            container.style.animation = 'none';
-            container.offsetHeight; // reflow
-            container.style.animation = 'fadeIn 0.3s ease forwards';
             currentLang = currentLang === 'vi' ? 'en' : 'vi';
-            updateLanguage();
+            updateUILanguage();
+            updateStatsAndRepos();
+            updateLanguageFilterOptions();
             btn.innerHTML = currentLang === 'vi' ? '🌐 Tiếng Việt / English' : '🌐 English / Vietnamese';
         });
     }
 
-    // Add fade-in for dynamic content
-    document.addEventListener('DOMContentLoaded', () => {
+    // ==================== KHỞI CHẠY ====================
+    async function init() {
         initDarkMode();
         initLanguageToggle();
-        updateLanguage();
-        console.log('csandkotlin page with dark mode + bilingual + fade animations ready');
-    });
+        setupFilters();
+        await fetchGitHubData();
+        updateUILanguage();
+    }
+    init();
 </script>
 </body>
 </html>
